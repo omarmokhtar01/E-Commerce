@@ -55,6 +55,8 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(express.json({ limit: "20kb" })); // parsing data to convert to json & limit data sending 20kb
 app.use(express.static(path.join(__dirname, "/uploads")));
+// Note that this option available for versions 1.0.0 and newer.
+
 // The middleware search into req.body, req.query and req.params and delete all key than begin with $.
 // This is a recursive function, it will call itself each time a JSON is found.
 app.use(mongoSanitize());
@@ -100,7 +102,8 @@ app.use(function (req, res, next) {
 // Mount Routes
 mountRoute(app);
 
-// Error handling route
+// Error handling route (unhandled routes)
+// app.all: used to route all types of HTTP requests. Like if we have POST, GET, PUT, DELETE
 app.all("*", (req, res, next) => {
   next(new ApiError(400, `Can't find this route ${req.originalUrl}`));
 });
@@ -114,7 +117,7 @@ const server = app.listen(PORT, () => {
   console.log(`Listineng on Port ${PORT}`);
 });
 
-// Unhandling rejection Error (Outside Express)
+// Unhandling rejection Error (Outside Express) like: db connection
 process.on("unhandledRejection", (err) => {
   console.log(`UnhandledRejection Error: ${err}`);
   server.close();

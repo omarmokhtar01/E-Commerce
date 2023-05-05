@@ -20,14 +20,12 @@ const {
   updatePasswordUser,
   updateUserData,
   logOutUser,
-  cookie,
 } = require("../Controller/userServices");
 
 const { authProtect, allowedTo } = require("../Controller/authService");
 
 const router = express.Router();
 
-router.get("/cookie", cookie);
 // User
 router.use(authProtect);
 router

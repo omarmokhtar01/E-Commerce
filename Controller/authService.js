@@ -78,7 +78,6 @@ exports.authProtect = asyncHandler(async (req, res, next) => {
   if (!token) {
     new ApiError(401, "Please Login first to access this route");
   }
-
   // 2) verify token (no changes , expired)
   const decode = jwt.verify(token, process.env.PRIVATEKEY);
 
@@ -117,6 +116,7 @@ exports.authProtect = asyncHandler(async (req, res, next) => {
 // @desc to check how can access to specific routes
 // @desc    Authorization (User Permissions)
 // ["admin", "manager"]
+// reset parameter [array]
 exports.allowedTo = (...roles) =>
   asyncHandler(async (req, res, next) => {
     // 1) access roles
