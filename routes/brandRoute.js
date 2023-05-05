@@ -16,7 +16,6 @@ const {
   deleteBrand,
   sharpImageBrand,
   postImageBrand,
-  imageCloudinaryBrand,
 } = require("../Controller/brandServices");
 
 const router = express.Router();
@@ -29,8 +28,7 @@ router
     authProtect,
     allowedTo("admin", "manager"),
     postImageBrand,
-    // sharpImageBrand,
-    imageCloudinaryBrand,
+    sharpImageBrand,
 
     ruleCreateBrandValidator,
     postBrand
